@@ -10,3 +10,7 @@ crate-type = ["cdylib"]
 [dependencies]
 human-sort = "0.2.2"
 pyo3 = "0.19.2"
+
+[features]
+extension-module = ["pyo3/extension-module"]
+default = ["extension-module"]
