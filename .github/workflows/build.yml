@@ -25,6 +25,7 @@ jobs:
       - name: Install Rust
         uses: actions-rs/toolchain@v1
         with:
+          toolchain: stable
           profile: minimal
           override: stable
           components: rustfmt, clippy
@@ -33,7 +34,7 @@ jobs:
         run: cargo build --release
 
       - name: Create Python Wheel
-        run: maturin develop
+        run: maturin develop --release
 
       - name: Upload Python Wheel
         uses: actions/upload-artifact@v2
