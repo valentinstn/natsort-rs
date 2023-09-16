@@ -69,12 +69,9 @@ jobs:
       - name: List Root
         run: ls -l .
 
-      - name: List Wheel Files
-        run: ls -l target/wheels/
-
       - name: Upload to PyPI
         run: |
-          twine upload target/wheels/*.whl
+          twine upload *.whl
         env:
           TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
           TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
