@@ -66,6 +66,12 @@ jobs:
       - name: Install Twine
         run: python -m pip install --upgrade twine
 
+      - name: List Root
+        run: ls -l .
+
+      - name: List Wheel Files
+        run: ls -l target/wheels/
+
       - name: Upload to PyPI
         run: |
           twine upload target/wheels/*.whl
