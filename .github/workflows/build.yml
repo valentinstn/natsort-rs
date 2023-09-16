@@ -20,7 +20,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Install Python requirements
-        run: python -m venv venv && source/venv/activate && python -m pip install maturin
+        run: python -m venv venv && source venv/bin/activate && python -m pip install maturin
 
       - name: Checkout code
         uses: actions/checkout@v2
