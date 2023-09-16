@@ -37,7 +37,7 @@ jobs:
         run: cargo build --release
 
       - name: Create Python Wheel
-        run: maturin develop
+        run: source venv/bin/activate && maturin develop
 
       - name: Upload Python Wheel
         uses: actions/upload-artifact@v2
