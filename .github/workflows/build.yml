@@ -16,8 +16,6 @@ jobs:
     steps:
       - name: Set up Python
         uses: actions/setup-python@v2
-        with:
-          python-version: ${{ matrix.python-version }}
 
       - name: Checkout code
         uses: actions/checkout@v2
@@ -34,7 +32,7 @@ jobs:
         run: cargo build --release
 
       - name: Create Python Wheel
-        run: maturin develop --release
+        run: maturin develop
 
       - name: Upload Python Wheel
         uses: actions/upload-artifact@v2
