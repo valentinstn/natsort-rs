@@ -1,1 +1,1 @@
-natsort
+maturin
