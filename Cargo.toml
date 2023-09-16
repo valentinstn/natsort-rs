@@ -1,0 +1,12 @@
+[package]
+name = "natsort-rs"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "natsort_rs"
+crate-type = ["cdylib"]
+
+[dependencies]
+human-sort = "0.2.2"
+pyo3 = "0.19.2"
