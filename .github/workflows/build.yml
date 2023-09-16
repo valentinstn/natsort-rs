@@ -34,7 +34,7 @@ jobs:
           components: rustfmt, clippy
 
       - name: Build Rust Extension
-        run: cargo build --release --strip
+        run: cargo build --release
 
       - name: Maturin build
         uses: PyO3/maturin-action@v1
