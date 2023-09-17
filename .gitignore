@@ -1,3 +1,5 @@
 /target
 /playground
 /venv
+/settings.json
+*.so
