@@ -15,17 +15,5 @@ pyo3 = "0.19.2"
 extension-module = ["pyo3/extension-module"]
 default = ["extension-module"]
 
-[target.aarch64-apple-darwin]
-rustflags = [
-  "-C", "link-arg=-undefined",
-  "-C", "link-arg=dynamic_lookup",
-]
-
-[target.x86_64-apple-darwin]
-rustflags = [
-"-C", "link-arg=-undefined",
-"-C", "link-arg=dynamic_lookup",
-]
-
 [profile.release]
 strip = true  # Automatically strip symbols from the binary.
