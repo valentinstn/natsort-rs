@@ -48,8 +48,29 @@ jobs:
           name: python-wheels
           path: target/wheels/*.whl
 
-  deploy:
+  test:
     needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download Python Wheels
+        uses: actions/download-artifact@v2
+        with:
+          name: python-wheels
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.11
+
+      - name: Install Wheels
+        run: pip install natsort_rs*.whl
+
+      - name: Run Tests 
+        run: python -m unittest discover tests
+
+  deploy:
+    needs: test
     runs-on: ubuntu-latest
 
     steps:
