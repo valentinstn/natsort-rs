@@ -63,11 +63,11 @@ jobs:
         with:
           python-version: 3.11
 
-      - name: Checkout code
-        uses: actions/checkout@v2
-
       - name: Install Wheels
         run: pip install natsort_rs-*-cp311-cp311-manylinux_2_34_x86_64.whl
+
+      - name: Checkout code
+        uses: actions/checkout@v2
 
       - name: Run Tests 
         run: python -m unittest discover tests
