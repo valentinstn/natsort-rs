@@ -1,4 +1,4 @@
-from .natsort_rs import natsort_strings
+from .natsort_rs import get_sorted_indices
 
 
 def natsort(
@@ -11,5 +11,5 @@ def natsort(
     else:
         strs_for_sorting = [key(item) for item in vals]
     
-    sorted_indices = natsort_strings(strs_for_sorting, ignore_case)
+    sorted_indices = get_sorted_indices(strs_for_sorting, ignore_case)
     return [vals[idx] for idx in sorted_indices]

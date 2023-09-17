@@ -1,12 +1,10 @@
-// src/lib.rs
-
 use pyo3::prelude::*;
-use pyo3::types::PyList; // Import PyList from pyo3::types
+use pyo3::types::PyList;
 use human_sort::compare;
 
-/// Sort a list of strings naturally (Python-facing function).
+/// Sort a list of strings naturally (Python-facing function) and return their sorted indices
 #[pyfunction]
-fn natsort_strings(list: &PyList, ignore_case: bool) -> PyResult<Vec<usize>> {
+fn get_sorted_indices(list: &PyList, ignore_case: bool) -> PyResult<Vec<usize>> {
     let vec: Vec<String> = list.extract()?;
     let mut indexed_strings: Vec<(usize, String)>;
     if ignore_case {
@@ -18,9 +16,9 @@ fn natsort_strings(list: &PyList, ignore_case: bool) -> PyResult<Vec<usize>> {
     Ok(indexed_strings.iter().map(|(index, _)| *index).collect())
 }
 
-/// A Python module implemented in Rust.
+/// The Python module definition
 #[pymodule]
 fn natsort_rs(_py: Python, m: &PyModule) -> PyResult<()> {
-    m.add_function(wrap_pyfunction!(natsort_strings, m)?)?;
+    m.add_function(wrap_pyfunction!(get_sorted_indices, m)?)?;
     Ok(())
 }

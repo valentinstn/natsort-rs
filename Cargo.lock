@@ -59,7 +59,7 @@ dependencies = [
 
 [[package]]
 name = "natsort-rs"
-version = "0.1.3"
+version = "0.1.5"
 dependencies = [
  "human-sort",
  "pyo3",
