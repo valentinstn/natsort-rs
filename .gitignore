@@ -3,3 +3,4 @@
 /venv
 /settings.json
 *.so
+__pycache__

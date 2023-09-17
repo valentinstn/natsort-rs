@@ -1,7 +1,10 @@
 [package]
 name = "natsort-rs"
-version = "0.1.2"
+description = "A blazing fast natural sorting library for Python"
+version = "0.1.3"
 edition = "2021"
+repository = "https://github.com/valentinstn/natsort-rs"
+license_file = "LICENSE"
 
 [lib]
 name = "natsort_rs"
