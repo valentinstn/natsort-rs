@@ -44,9 +44,23 @@ print(natsort(items, key=lambda d: d['name']))
 # [{'name': 'item 1', 'id': 1}, {'name': 'item 2', 'id': 2}, {'name': 'item 3', 'id': 3}]
 ```
 
+## Benchmark
+
+| No. of items | natsort [s] | natsort-rs [s] | speedup [-] |
+|-----|-----|-----|-----|
+| 10 | 0.00006 | 0.00000 | 17.0 |
+| 100 | 0.00071 | 0.00003 | 24.6 |
+| 1000 | 0.00285 | 0.00036 | 7.9 |
+| 10000 | 0.02892 | 0.00462 | 6.3 |
+| 100000 | 0.29960 | 0.06098 | 4.9 |
+| 1000000 | 3.33878 | 0.80086 | 4.2 |
+
+Execute `benchmark.py` to reproduce the results.
+
 ## Credits
 
-This Python module is build on top of the [`human-sort`](https://crates.io/crates/human-sort) crate.
+This Python module is build on top of the [`human-sort`](https://crates.io/crates/human-sort) crate and inspired by [`natsort`](https://pypi.org/project/natsort/).
+
 
 ## License
 
