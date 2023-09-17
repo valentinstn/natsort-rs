@@ -23,7 +23,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install Python requirements
-        run: python -m pip -r requirements.txt
+        run: python -m pip install maturin
 
       - name: Install Rust
         uses: actions-rs/toolchain@v1
