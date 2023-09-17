@@ -6,9 +6,7 @@ Warning: **This is a pre-alpha library. It should not yet be used for production
 
 ## Installation
 
-Find package files on [PyPI](https://pypi.org/project/natsort-rs/). 
-
-> Note: Currently, there exist no builds for Apple Silicon chips.
+Find package files on [PyPI](https://pypi.org/project/natsort-rs/).
 
 ## Examples
 
