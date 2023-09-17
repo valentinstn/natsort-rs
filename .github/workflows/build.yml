@@ -64,7 +64,7 @@ jobs:
           python-version: 3.11
 
       - name: Install Wheels
-        run: pip install natsort_rs*.whl
+        run: pip install natsort_rs-*-cp311-cp311-manylinux_2_34_x86_64.whl
 
       - name: Run Tests 
         run: python -m unittest discover tests
