@@ -30,7 +30,8 @@ def measure_execution_time(fn_name, func, *args, **kwargs):
         execution_time = end_time - start_time
         total_execution_time += execution_time
     average_execution_time = total_execution_time / num_runs
-    print(f"{fn_name} took an average of {average_execution_time:.6f} seconds to execute ({len(args[0])} items).")
+    print(f"{fn_name} took an average of {average_execution_time:.6f} seconds "
+          f"to execute ({len(args[0])} items).")
     return average_execution_time, result
 
 
