@@ -70,7 +70,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Run Tests 
-        run: python -m unittest discover tests
+        run: rm -rf natsort_rs && python -m unittest discover tests
 
   deploy:
     needs: test
