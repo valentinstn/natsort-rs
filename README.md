@@ -2,13 +2,15 @@
 
 *A blazing fast natural sorting library for Python written in Rust 🚀*
 
-Warning: **This is a pre-alpha library. It should not yet be used for production code.**
+> Note: This is a pre-alpha library. Don't use it for production code yet.
 
 ## Installation
 
-Find package files on [PyPI](https://pypi.org/project/natsort-rs/).
+```
+pip install natsort-rs
+```
 
-## Examples
+## Usage
 
 ```py
 from natsort_rs import natsort
