@@ -1,8 +1,9 @@
-# natsort-rs
+<h1 align="center">natsort-rs</h1>
+<p align="center">
+    <em>🚀 A blazing fast natural sorting library for Python written in Rust 🦀</em>
+</p>
 
-*A blazing fast natural sorting library for Python written in Rust 🚀*
-
-> Note: This is a pre-alpha library. Don't use it for production code yet.
+> Note: This is a pre-alpha library. Don't use it for production code yet!
 
 ## Installation
 
