@@ -3,8 +3,6 @@
     <em>🚀 A blazing fast natural sorting library for Python written in Rust 🦀</em>
 </p>
 
-> Note: This is a pre-alpha library. Don't use it for production code yet!
-
 ## Installation
 
 ```
@@ -47,20 +45,20 @@ print(natsort(items, key=lambda d: d['name']))
 
 ## Benchmark
 
-| No. of items | natsort [s] | natsort-rs [s] | speedup [-] |
+| No. of items | Duration natsort [s] | Duration natsort-rs [s] | Relative speedup |
 |-----|-----|-----|-----|
-| 10 | 0.00006 | 0.00000 | 17.0 |
-| 100 | 0.00071 | 0.00003 | 24.6 |
-| 1000 | 0.00285 | 0.00036 | 7.9 |
-| 10000 | 0.02892 | 0.00462 | 6.3 |
-| 100000 | 0.29960 | 0.06098 | 4.9 |
-| 1000000 | 3.33878 | 0.80086 | 4.2 |
+| 10 | 0.00006 | 0.00000 | 16.8 |
+| 100 | 0.00094 | 0.00002 | 44.3 |
+| 1000 | 0.00281 | 0.00022 | 12.7 |
+| 10000 | 0.02835 | 0.00262 | 10.8 |
+| 100000 | 0.29712 | 0.03334 | 8.9 |
+| 1000000 | 3.31207 | 0.45333 | 7.3 |
 
 Execute `benchmark.py` to reproduce the results.
 
 ## Credits
 
-This Python module is build on top of the [`human-sort`](https://crates.io/crates/human-sort) crate and inspired by [`natsort`](https://pypi.org/project/natsort/).
+This Python module is build on top of the [`natord`](https://docs.rs/natord/latest/natord/) crate and inspired by [`natsort`](https://pypi.org/project/natsort/).
 
 
 ## License

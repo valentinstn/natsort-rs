@@ -40,3 +40,14 @@ class NatSortTestCase(TestCase):
             sorted_objs[2], 
             {'name': 'item 3', 'id': 3}
         )
+    
+    def test_with_numbers_attached_to_string(self):
+        self.assertListEqual(
+            natsort(
+                ['item 0', 'item 1b', 'Item 5', 'Item 50000', 
+                 'item 3b', 'item 3000b', 'item 2b'], 
+                ignore_case=True
+            ),
+            ['item 0', 'item 1b', 'item 2b', 'item 3b', 
+             'Item 5', 'item 3000b', 'Item 50000']
+        )

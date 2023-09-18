@@ -1,6 +1,6 @@
 use pyo3::prelude::*;
 use pyo3::types::PyList;
-use human_sort::compare;
+use natord::compare;
 
 /// Sort a list of strings naturally (Python-facing function) and return their sorted indices
 #[pyfunction]

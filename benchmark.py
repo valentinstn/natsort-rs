@@ -7,7 +7,7 @@ from natsort_rs import natsort as natsort_rs
 from tomark import Tomark
 
 
-def generate_random_strings(seed, num, length=10):
+def generate_random_strings(seed, num, length=10, prefix=''):
     random.seed(seed)
     
     characters = string.ascii_letters + string.digits
@@ -15,7 +15,7 @@ def generate_random_strings(seed, num, length=10):
     random_strings = []
     for _ in range(num):
         random_string = ''.join(random.choice(characters) for _ in range(length))
-        random_strings.append(random_string)
+        random_strings.append(prefix + random_string)
     
     return random_strings
 
@@ -57,10 +57,10 @@ if __name__ == '__main__':
 
         print(f'Speed improvement: {ratio:.1f} times')
         benchmark_results.append({
-            'items': len(example_data),
-            'natsort [s]': f'{dur_py:.5f}',
-            'natsort-rs [s]': f'{dur_rs:.5f}',
-            'speedup [-]': f'{ratio:.1f}'
+            'No. of items': len(example_data),
+            'Duration natsort [s]': f'{dur_py:.5f}',
+            'Duration natsort-rs [s]': f'{dur_rs:.5f}',
+            'Relative speedup': f'{ratio:.1f}'
         })
     
     print(Tomark.table(benchmark_results))
