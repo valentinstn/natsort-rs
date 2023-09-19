@@ -51,3 +51,9 @@ class NatSortTestCase(TestCase):
             ['item 0', 'item 1b', 'item 2b', 'item 3b', 
              'Item 5', 'item 3000b', 'Item 50000']
         )
+
+    def test_numbers_with_unit(self):
+        self.assertListEqual(
+            natsort(['Vol: 20L', 'Vol: 1L', 'Vol: 2L', 'Vol: 10L']),
+            ['Vol: 1L', 'Vol: 2L', 'Vol: 10L', 'Vol: 20L']
+        )
