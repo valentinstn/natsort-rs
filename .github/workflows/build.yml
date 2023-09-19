@@ -68,7 +68,7 @@ jobs:
           path: target/wheels/*.whl
 
   test:
-    needs: build
+    needs: build-linux
     runs-on: ubuntu-latest
 
     steps:
