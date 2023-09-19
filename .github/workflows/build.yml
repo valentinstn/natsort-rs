@@ -26,7 +26,7 @@ jobs:
         with:
           name: python-wheels
           path: target/wheels/*.whl
-          
+
       - name: List Wheels
         run: ls -l target/wheels/*.whl
   
@@ -61,17 +61,14 @@ jobs:
           override: stable
           components: rustfmt, clippy
 
-      - name: Build Rust Extension
-        run: cargo build --release
-
       - name: Maturin build
         uses: PyO3/maturin-action@v1
         with:
           command: build
           args: --release
 
-      - name: List Wheels
-        run: ls -l target/wheels/*.whl
+      - name: List Root
+        run: ls -l .
 
       - name: Upload Python Wheel
         uses: actions/upload-artifact@v2
@@ -95,7 +92,7 @@ jobs:
           python-version: 3.11
 
       - name: Install Wheels
-        run: pip install natsort_rs-*-cp311-cp311-manylinux_2_34_x86_64.whl
+        run: pip install natsort_rs-*-cp311-cp311-manylinux_*_x86_64.whl
 
       - name: Checkout code
         uses: actions/checkout@v2
