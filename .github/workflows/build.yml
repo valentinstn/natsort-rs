@@ -18,6 +18,8 @@ jobs:
         with:
           command: build
           args: --release -i python${{ matrix.python-version }}
+          target: x86_64
+          manylinux: auto
       - name: Upload Python Wheel
         uses: actions/upload-artifact@v2
         with:
