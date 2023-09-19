@@ -23,6 +23,9 @@ jobs:
         with:
           name: python-wheels
           path: target/wheels/*.whl
+      - name: List Root
+        run: ls -l .
+  
   build-other:
     runs-on: ${{ matrix.os }}
     strategy:
@@ -70,7 +73,7 @@ jobs:
           path: target/wheels/*.whl
 
   test:
-    needs: build-linux
+    needs: [build-linux, build-other]
     runs-on: ubuntu-latest
 
     steps:
