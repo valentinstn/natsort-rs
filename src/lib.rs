@@ -1,10 +1,11 @@
 use pyo3::prelude::*;
 use pyo3::types::PyList;
 use natord::compare;
+use rayon::prelude::*;
 
 /// Sort a list of strings naturally (Python-facing function) and return their sorted indices
 #[pyfunction]
-fn get_sorted_indices(list: &PyList, ignore_case: bool) -> PyResult<Vec<usize>> {
+fn get_sorted_indices(list: &PyList, ignore_case: bool, parallel: bool) -> PyResult<Vec<usize>> {
     let vec: Vec<String> = list.extract()?;
     let mut indexed_strings: Vec<(usize, String)>;
     if ignore_case {
@@ -12,7 +13,12 @@ fn get_sorted_indices(list: &PyList, ignore_case: bool) -> PyResult<Vec<usize>> 
     } else {
         indexed_strings = vec.iter().map(|val| val.clone()).enumerate().collect();
     }
-    indexed_strings.sort_by(|(_, a), (_, b)| compare(a, b));
+
+    if parallel {
+        indexed_strings.par_sort_by(|(_, a), (_, b)| compare(a, b));
+    } else {
+        indexed_strings.sort_by(|(_, a), (_, b)| compare(a, b));
+    }
     Ok(indexed_strings.iter().map(|(index, _)| *index).collect())
 }
 

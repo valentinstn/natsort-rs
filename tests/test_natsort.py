@@ -1,4 +1,4 @@
-from natsort_rs import natsort 
+from natsort_rs import natsort
 from unittest import TestCase
 
 
@@ -56,4 +56,11 @@ class NatSortTestCase(TestCase):
         self.assertListEqual(
             natsort(['Vol: 20L', 'Vol: 1L', 'Vol: 2L', 'Vol: 10L']),
             ['Vol: 1L', 'Vol: 2L', 'Vol: 10L', 'Vol: 20L']
+        )
+
+    def test_returned_indices(self):
+        self.assertEqual(
+            natsort(['Vol: 20L', 'Vol: 1L', 'Vol: 2L', 'Vol: 10L'], 
+                    return_indices=True),
+            [1, 2, 3, 0]
         )

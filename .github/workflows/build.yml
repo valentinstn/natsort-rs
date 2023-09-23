@@ -77,7 +77,7 @@ jobs:
           path: target/wheels/*.whl
 
   test:
-    needs: [build-linux, build-other]
+    needs: [build-linux]
     runs-on: ubuntu-latest
 
     steps:
@@ -101,7 +101,7 @@ jobs:
         run: rm -rf natsort_rs && python -m unittest discover tests
 
   deploy:
-    needs: test
+    needs: [test, build-other]
     runs-on: ubuntu-latest
 
     steps:

@@ -43,6 +43,21 @@ print(natsort(items, key=lambda d: d['name']))
 # [{'name': 'item 1', 'id': 1}, {'name': 'item 2', 'id': 2}, {'name': 'item 3', 'id': 3}]
 ```
 
+### Return the sorting indices
+
+This can be helpful if you only want to get the sorted indices returned, that makes the performance-critical part
+useful for custom sorting use cases:
+
+```py
+items = ['item 1', 'item 10', 'item 3']
+print(natsort(items, return_indices=True))  
+# [0, 2, 1]
+```
+
+### Turn off multithreading
+
+Multithreading is enabled by default and can be turned off by setting `parallel = False`.
+
 ## Benchmark
 
 | No. of items | Duration natsort [s] | Duration natsort-rs [s] | Relative speedup |
