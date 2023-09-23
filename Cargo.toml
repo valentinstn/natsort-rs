@@ -14,6 +14,7 @@ crate-type = ["cdylib"]
 [dependencies]
 natord = "1.0.9"
 pyo3 = "0.19.2"
+rayon = "1.8.0"
 
 [features]
 extension-module = ["pyo3/extension-module"]

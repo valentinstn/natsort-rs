@@ -1,6 +1,7 @@
 use pyo3::prelude::*;
 use pyo3::types::PyList;
 use natord::compare;
+use rayon::prelude::*;
 
 /// Sort a list of strings naturally (Python-facing function) and return their sorted indices
 #[pyfunction]
@@ -12,7 +13,8 @@ fn get_sorted_indices(list: &PyList, ignore_case: bool) -> PyResult<Vec<usize>> 
     } else {
         indexed_strings = vec.iter().map(|val| val.clone()).enumerate().collect();
     }
-    indexed_strings.sort_by(|(_, a), (_, b)| compare(a, b));
+
+    indexed_strings.par_sort_unstable_by(|(_, a), (_, b)| compare(a, b));
     Ok(indexed_strings.iter().map(|(index, _)| *index).collect())
 }
 
