@@ -52,14 +52,16 @@ if __name__ == '__main__':
     benchmark_results = []
     for example_data in example_datas:
         dur_py, _ = measure_execution_time('natsort_py', natsort_py, example_data)
-        dur_rs, _ = measure_execution_time('natsort_rs', natsort_rs, example_data)
-        ratio = dur_py / dur_rs
+        dur_rs, _ = measure_execution_time('natsort_rs', natsort_rs, example_data, None, False, False)
+        dur_rs_par, _ = measure_execution_time('natsort_rs_par', natsort_rs, example_data, None, False, True)
+        ratio = dur_py / dur_rs_par
 
         print(f'Speed improvement: {ratio:.1f} times')
         benchmark_results.append({
             'No. of items': len(example_data),
             'Duration natsort [s]': f'{dur_py:.5f}',
             'Duration natsort-rs [s]': f'{dur_rs:.5f}',
+            'Duration natsort-rs parallel [s]': f'{dur_rs_par:.5f}',
             'Relative speedup': f'{ratio:.1f}'
         })
     
