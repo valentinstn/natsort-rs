@@ -5,7 +5,6 @@ def natsort(
         vals: list, 
         key = None, 
         ignore_case = False, 
-        parallel = False, 
         return_indices = False
 ):
     if key is None:
@@ -13,7 +12,7 @@ def natsort(
     else:
         strs_for_sorting = [key(item) for item in vals]
     
-    sorted_indices = get_sorted_indices(strs_for_sorting, ignore_case, parallel)
+    sorted_indices = get_sorted_indices(strs_for_sorting, ignore_case)
 
     if return_indices:
         return sorted_indices

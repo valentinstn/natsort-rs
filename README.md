@@ -54,10 +54,6 @@ print(natsort(items, return_indices=True))
 # [0, 2, 1]
 ```
 
-### Turn off multithreading
-
-Multithreading is currently experimental and can be turned on by setting `parallel = True`.
-
 ## Benchmark
 
 | No. of items | Duration natsort [s] | Duration natsort-rs [s] | Relative speedup |
