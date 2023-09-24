@@ -56,7 +56,7 @@ print(natsort(items, return_indices=True))
 
 ### Turn off multithreading
 
-Multithreading is enabled by default and can be turned off by setting `parallel = False`.
+Multithreading is currently experimental and can be turned on by setting `parallel = True`.
 
 ## Benchmark
 

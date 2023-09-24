@@ -5,7 +5,7 @@ def natsort(
         vals: list, 
         key = None, 
         ignore_case = False, 
-        parallel = True, 
+        parallel = False, 
         return_indices = False
 ):
     if key is None:
