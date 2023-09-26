@@ -10,7 +10,7 @@ jobs:
     runs-on: 'ubuntu-latest'
     strategy:
       matrix:
-        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12-rc.3"]
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12-rc.2"]
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -35,7 +35,7 @@ jobs:
     strategy:
       matrix:
         os: [windows-latest, macos-latest, self-hosted]
-        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12-rc.3"]
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12-rc.2"]
         exclude:
           - os: self-hosted
             python-version: "3.8"
