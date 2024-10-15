@@ -24,7 +24,7 @@ jobs:
       - name: Upload Python Wheel
         uses: actions/upload-artifact@v4
         with:
-          name: python-wheels-${{ matrix.machine }}-${{ matrix.cloud }}-${{ matrix.region }}-${{ matrix.arch }}-${{ matrix.distro }}-${{ matrix.stage }}-${{ matrix.theater }}
+          name: python-wheels-${{ matrix.os }}-${{ matrix.python-version }}
           path: target/wheels/*.whl
 
       - name: List Wheels
