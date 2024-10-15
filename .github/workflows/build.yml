@@ -63,7 +63,7 @@ jobs:
           python-version: 3.11
 
       - name: Install Wheels
-        run: ls -la && pip install python-wheels-ubuntu-latest-3.11/natsort_rs-*.whl
+        run: ls -la && pip install natsort_rs-*.whl
 
       - name: Checkout code
         uses: actions/checkout@v2
