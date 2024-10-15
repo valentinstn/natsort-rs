@@ -84,7 +84,7 @@ jobs:
       - name: Download Python Wheels
         uses: actions/download-artifact@v4
         with:
-          name: python-wheels
+          pattern: python-wheels*
 
       - name: Set up Python
         uses: actions/setup-python@v2
