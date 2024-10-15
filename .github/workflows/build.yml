@@ -24,7 +24,7 @@ jobs:
       - name: Upload Python Wheel
         uses: actions/upload-artifact@v4
         with:
-          name: python-wheels
+          name: python-wheels-${{ matrix.machine }}-${{ matrix.cloud }}-${{ matrix.region }}-${{ matrix.arch }}-${{ matrix.distro }}-${{ matrix.stage }}-${{ matrix.theater }}
           path: target/wheels/*.whl
 
       - name: List Wheels
@@ -73,7 +73,7 @@ jobs:
       - name: Upload Python Wheel
         uses: actions/upload-artifact@v4
         with:
-          name: python-wheels
+          name: python-wheels-${{ matrix.machine }}-${{ matrix.cloud }}-${{ matrix.region }}-${{ matrix.arch }}-${{ matrix.distro }}-${{ matrix.stage }}-${{ matrix.theater }}
           path: target/wheels/*.whl
 
   test:
@@ -108,7 +108,7 @@ jobs:
       - name: Download Python Wheels
         uses: actions/download-artifact@v4
         with:
-          name: python-wheels
+          pattern: python-wheels*
 
       - name: Set up Python
         uses: actions/setup-python@v2
