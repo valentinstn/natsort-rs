@@ -73,31 +73,17 @@ Execute `benchmark.py` to reproduce the results.
 
 To build and test the package locally using `uv`:
 
-1. Create a virtual environment and install dev dependencies:
-   ```bash
-   uv venv
-   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-   uv pip install -e ".[dev]"
-   ```
-
-2. Build and install the package in development mode:
-   ```bash
-   maturin develop --release
-   ```
+```bash
+uv run --extra dev maturin develop --release
+```
 
 ### Running benchmarks
 
 To run benchmarks:
 
-1. Install benchmark dependencies:
-   ```bash
-   uv pip install -e ".[benchmark]"
-   ```
-
-2. Run the benchmark script:
-   ```bash
-   python benchmark.py
-   ```
+```bash
+uv run --extra benchmark python benchmark.py
+```
 
 This will compare the performance of `natsort-rs` against the pure Python `natsort` library and display results in a table format.
 
