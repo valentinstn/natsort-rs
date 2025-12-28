@@ -19,6 +19,7 @@ fn get_sorted_indices(list: &Bound<'_, PyList>, ignore_case: bool) -> PyResult<V
 
 /// The Python module definition
 #[pymodule]
+#[pyo3(gil_used = false)]
 fn natsort_rs(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(get_sorted_indices, m)?)?;
     Ok(())
