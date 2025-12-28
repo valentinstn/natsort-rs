@@ -67,6 +67,49 @@ print(natsort(items, return_indices=True))
 
 Execute `benchmark.py` to reproduce the results.
 
+## Development
+
+### Local Build Setup
+
+To build and test the package locally using `uv`:
+
+1. Install `uv` if you haven't already:
+   ```bash
+   curl -LsSf https://astral.sh/uv/install.sh | sh
+   ```
+
+2. Create a virtual environment and install dependencies:
+   ```bash
+   uv venv
+   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+   ```
+
+3. Install maturin for building:
+   ```bash
+   uv pip install maturin
+   ```
+
+4. Build and install the package in development mode:
+   ```bash
+   maturin develop --release
+   ```
+
+### Running Benchmarks
+
+After building the package locally, you can run benchmarks:
+
+1. Install benchmark dependencies:
+   ```bash
+   uv pip install natsort tomark
+   ```
+
+2. Run the benchmark script:
+   ```bash
+   python benchmark.py
+   ```
+
+This will compare the performance of `natsort-rs` against the pure Python `natsort` library and display results in a table format.
+
 ## Credits
 
 This Python module is build on top of the [`natord`](https://docs.rs/natord/latest/natord/) crate and inspired by [`natsort`](https://pypi.org/project/natsort/).
