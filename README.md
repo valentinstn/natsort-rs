@@ -69,34 +69,29 @@ Execute `benchmark.py` to reproduce the results.
 
 ## Development
 
-### Local Build Setup
+### Local build
 
 To build and test the package locally using `uv`:
 
-1. Install `uv` if you haven't already:
-   ```bash
-   curl -LsSf https://astral.sh/uv/install.sh | sh
-   ```
-
-2. Create a virtual environment and install dependencies:
+1. Create a virtual environment:
    ```bash
    uv venv
    source .venv/bin/activate  # On Windows: .venv\Scripts\activate
    ```
 
-3. Install maturin for building:
+2. Install maturin:
    ```bash
    uv pip install maturin
    ```
 
-4. Build and install the package in development mode:
+3. Build and install the package in development mode:
    ```bash
    maturin develop --release
    ```
 
-### Running Benchmarks
+### Running benchmarks
 
-After building the package locally, you can run benchmarks:
+To run benchmarks:
 
 1. Install benchmark dependencies:
    ```bash
