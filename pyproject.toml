@@ -4,10 +4,11 @@ build-backend = "maturin"
 
 [project]
 name = "natsort-rs"
-version = "0.1.16"
 description = "A blazing fast natural sorting library for Python"
 requires-python = ">=3.9"
 license = { file = "LICENSE" }
+dependencies = ["maturin>=1.0,<2.0", "natsort>=8.0.0", "tomark>=0.1.0"]
+dynamic = ["version"]
 classifiers = [
     "Programming Language :: Rust",
     "Programming Language :: Python :: Implementation :: CPython",
@@ -19,9 +20,6 @@ classifiers = [
     "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.14",
 ]
-
-[project.optional-dependencies]
-dev = ["maturin>=1.0,<2.0", "natsort>=8.0.0", "tomark>=0.1.0"]
 
 [tool.maturin]
 python-source = "."

@@ -74,7 +74,7 @@ Execute `benchmark.py` to reproduce the results.
 To build and test the package locally using `uv`:
 
 ```bash
-uv run --extra dev maturin develop --release
+uv run maturin develop --release
 ```
 
 ### Running benchmarks
@@ -82,7 +82,7 @@ uv run --extra dev maturin develop --release
 To run benchmarks:
 
 ```bash
-uv run --extra dev python benchmark.py
+uv run python benchmark.py
 ```
 
 This will compare the performance of `natsort-rs` against the pure Python `natsort` library and display results in a table format.
