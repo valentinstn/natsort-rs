@@ -4,7 +4,6 @@ description = "A blazing fast natural sorting library for Python"
 version = "0.1.15"
 edition = "2021"
 repository = "https://github.com/valentinstn/natsort-rs"
-license_file = "LICENSE"
 license = "MIT"
 
 [lib]
