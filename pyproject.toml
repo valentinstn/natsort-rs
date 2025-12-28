@@ -20,6 +20,10 @@ classifiers = [
     "Programming Language :: Python :: 3.14",
 ]
 
+[project.optional-dependencies]
+dev = ["maturin>=1.0,<2.0"]
+benchmark = ["natsort>=8.0.0", "tomark>=0.1.0"]
+
 [tool.maturin]
 python-source = "."
 module-name = "natsort_rs.natsort_rs"

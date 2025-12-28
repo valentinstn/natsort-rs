@@ -73,18 +73,14 @@ Execute `benchmark.py` to reproduce the results.
 
 To build and test the package locally using `uv`:
 
-1. Create a virtual environment:
+1. Create a virtual environment and install dev dependencies:
    ```bash
    uv venv
    source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+   uv pip install -e ".[dev]"
    ```
 
-2. Install maturin:
-   ```bash
-   uv pip install maturin
-   ```
-
-3. Build and install the package in development mode:
+2. Build and install the package in development mode:
    ```bash
    maturin develop --release
    ```
@@ -95,7 +91,7 @@ To run benchmarks:
 
 1. Install benchmark dependencies:
    ```bash
-   uv pip install natsort tomark
+   uv pip install -e ".[benchmark]"
    ```
 
 2. Run the benchmark script:
