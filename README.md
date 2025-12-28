@@ -67,6 +67,26 @@ print(natsort(items, return_indices=True))
 
 Execute `benchmark.py` to reproduce the results.
 
+## Development
+
+### Local build
+
+To build and test the package locally using `uv`:
+
+```bash
+uv run maturin develop --release
+```
+
+### Running benchmarks
+
+To run benchmarks:
+
+```bash
+uv run benchmark.py
+```
+
+This will compare the performance of `natsort-rs` against the pure Python `natsort` library and display results in a table format.
+
 ## Credits
 
 This Python module is build on top of the [`natord`](https://docs.rs/natord/latest/natord/) crate and inspired by [`natsort`](https://pypi.org/project/natsort/).

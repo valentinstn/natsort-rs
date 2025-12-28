@@ -6,96 +6,152 @@ on:
       - main
 
 jobs:
-  build:
-    runs-on: ${{ matrix.os }}
+  linux:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-13, macos-latest]
-        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13", "3.14"]
+        target: [x86_64, aarch64]
     steps:
-      - name: Set up Python
-        uses: actions/setup-python@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
-          python-version: ${{ matrix.python-version }}
-
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Install Python requirements
-        run: python -m pip install maturin
-
-      - name: Install Rust
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          profile: minimal
-          override: stable
-          components: rustfmt, clippy
-
-      - name: Maturin build
+          python-version: '3.11'
+      - name: Build wheels
         uses: PyO3/maturin-action@v1
         with:
-          command: build
-          args: --release
-
-      - name: List Root
-        run: ls -l .
-
-      - name: Upload Python Wheel
+          target: ${{ matrix.target }}
+          args: --release --out dist --interpreter 3.9 3.10 3.11 3.12 3.13 3.14
+          sccache: 'true'
+          manylinux: auto
+      - name: Build free-threaded wheels
+        uses: PyO3/maturin-action@v1
+        with:
+          target: ${{ matrix.target }}
+          args: --release --out dist --interpreter 3.13t 3.14t
+          sccache: 'true'
+          manylinux: auto
+      - name: Upload wheels
         uses: actions/upload-artifact@v4
         with:
-          name: python-wheels-${{ matrix.os }}-${{ matrix.python-version }}
-          path: target/wheels/*.whl
+          name: wheels-linux-${{ matrix.target }}
+          path: dist
+
+  windows:
+    runs-on: windows-latest
+    permissions:
+      contents: read
+    strategy:
+      matrix:
+        target: [x64, x86]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Build wheels
+        uses: PyO3/maturin-action@v1
+        with:
+          target: ${{ matrix.target }}
+          args: --release --out dist --interpreter 3.9 3.10 3.11 3.12 3.13 3.14
+          sccache: 'true'
+      - name: Build free-threaded wheels
+        uses: PyO3/maturin-action@v1
+        with:
+          target: ${{ matrix.target }}
+          args: --release --out dist --interpreter 3.13t 3.14t
+          sccache: 'true'
+      - name: Upload wheels
+        uses: actions/upload-artifact@v4
+        with:
+          name: wheels-windows-${{ matrix.target }}
+          path: dist
+
+  macos:
+    runs-on: macos-latest
+    permissions:
+      contents: read
+    strategy:
+      matrix:
+        target: [x86_64, aarch64]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Build wheels
+        uses: PyO3/maturin-action@v1
+        with:
+          target: ${{ matrix.target }}
+          args: --release --out dist --interpreter 3.9 3.10 3.11 3.12 3.13 3.14
+          sccache: 'true'
+      - name: Build free-threaded wheels
+        uses: PyO3/maturin-action@v1
+        with:
+          target: ${{ matrix.target }}
+          args: --release --out dist --interpreter 3.13t 3.14t
+          sccache: 'true'
+      - name: Upload wheels
+        uses: actions/upload-artifact@v4
+        with:
+          name: wheels-macos-${{ matrix.target }}
+          path: dist
+
+  sdist:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build sdist
+        uses: PyO3/maturin-action@v1
+        with:
+          command: sdist
+          args: --out dist
+      - name: Upload sdist
+        uses: actions/upload-artifact@v4
+        with:
+          name: wheels-sdist
+          path: dist
 
   test:
-    needs: [build]
+    needs: [linux, windows, macos, sdist]
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: read
     steps:
-      - name: Download Python Wheels
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Download wheels
         uses: actions/download-artifact@v4
         with:
-          name: python-wheels-ubuntu-latest-3.11
-
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.11
-
-      - name: Install Wheels
-        run: ls -la && pip install natsort_rs-*.whl
-
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Run Tests 
-        run: rm -rf natsort_rs && python -m unittest discover tests
+          pattern: wheels-*
+          merge-multiple: true
+          path: dist
+      - name: Install wheel
+        run: pip install dist/natsort_rs-*-cp311-*.whl
+      - name: Run tests
+        run: python -m unittest discover tests
 
   deploy:
-    needs: [test, build]
+    needs: [test]
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: read
     steps:
-      - name: Download Python Wheels
+      - name: Download wheels
         uses: actions/download-artifact@v4
         with:
-          pattern: python-wheels*
+          pattern: wheels-*
           merge-multiple: true
-
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.11
-
-      - name: Install Twine
-        run: python -m pip install --upgrade twine
-
-      - name: List Root
-        run: ls -l .
-
+          path: dist
       - name: Upload to PyPI
-        run: |
-          twine upload *.whl
+        uses: PyO3/maturin-action@v1
         env:
-          TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
-          TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+          MATURIN_PYPI_TOKEN: ${{ secrets.PYPI_PASSWORD }}
+        with:
+          command: upload
+          args: --skip-existing dist/*
