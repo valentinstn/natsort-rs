@@ -8,6 +8,8 @@ on:
 jobs:
   linux:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     strategy:
       matrix:
         target: [x86_64, aarch64]
@@ -38,6 +40,8 @@ jobs:
 
   windows:
     runs-on: windows-latest
+    permissions:
+      contents: read
     strategy:
       matrix:
         target: [x64, x86]
@@ -66,6 +70,8 @@ jobs:
 
   macos:
     runs-on: macos-latest
+    permissions:
+      contents: read
     strategy:
       matrix:
         target: [x86_64, aarch64]
@@ -94,6 +100,8 @@ jobs:
 
   sdist:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v4
       - name: Build sdist
@@ -110,6 +118,8 @@ jobs:
   test:
     needs: [linux, windows, macos, sdist]
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -129,6 +139,8 @@ jobs:
   deploy:
     needs: [test]
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Download wheels
         uses: actions/download-artifact@v4
