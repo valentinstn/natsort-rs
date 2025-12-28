@@ -27,6 +27,3 @@ dev = [
   "tomark>=0.1.0"
 ]
 
-[tool.maturin]
-python-source = "."
-module-name = "natsort_rs"
