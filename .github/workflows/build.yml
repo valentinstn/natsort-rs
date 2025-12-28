@@ -132,7 +132,7 @@ jobs:
           merge-multiple: true
           path: dist
       - name: Install wheel
-        run: pip install dist/natsort_rs-*-cp311-*.whl
+        run: pip install dist/natsort_rs-*-cp311-*linux*64.whl
       - name: Run tests
         run: python -m unittest discover tests
 
