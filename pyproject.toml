@@ -4,7 +4,7 @@ build-backend = "maturin"
 
 [project]
 name = "natsort-rs"
-version = "0.1.15"
+version = "0.1.16"
 description = "A blazing fast natural sorting library for Python"
 requires-python = ">=3.9"
 license = { file = "LICENSE" }
