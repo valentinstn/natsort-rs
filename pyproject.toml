@@ -21,8 +21,7 @@ classifiers = [
 ]
 
 [project.optional-dependencies]
-dev = ["maturin>=1.0,<2.0"]
-benchmark = ["natsort>=8.0.0", "tomark>=0.1.0"]
+dev = ["maturin>=1.0,<2.0", "natsort>=8.0.0", "tomark>=0.1.0"]
 
 [tool.maturin]
 python-source = "."
