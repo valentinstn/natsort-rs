@@ -22,7 +22,7 @@ jobs:
         uses: PyO3/maturin-action@v1
         with:
           target: ${{ matrix.target }}
-          args: --release --out dist --interpreter 3.9 3.10 3.11 3.12 3.13 3.14
+          args: --release --out dist
           sccache: 'true'
           manylinux: auto
       - name: Build free-threaded wheels
@@ -54,7 +54,7 @@ jobs:
         uses: PyO3/maturin-action@v1
         with:
           target: ${{ matrix.target }}
-          args: --release --out dist --interpreter 3.9 3.10 3.11 3.12 3.13 3.14
+          args: --release --out dist
           sccache: 'true'
       - name: Build free-threaded wheels
         uses: PyO3/maturin-action@v1
@@ -84,7 +84,7 @@ jobs:
         uses: PyO3/maturin-action@v1
         with:
           target: ${{ matrix.target }}
-          args: --release --out dist --interpreter 3.9 3.10 3.11 3.12 3.13 3.14
+          args: --release --out dist
           sccache: 'true'
       - name: Build free-threaded wheels
         uses: PyO3/maturin-action@v1
@@ -132,7 +132,7 @@ jobs:
           merge-multiple: true
           path: dist
       - name: Install wheel
-        run: pip install dist/natsort_rs-*-cp311-*linux*x86_64.whl
+        run: pip install dist/natsort_rs-*-cp39-abi3-*linux*x86_64.whl
       - name: Remove source to avoid import conflicts
         run: rm -rf natsort_rs
       - name: Run tests
