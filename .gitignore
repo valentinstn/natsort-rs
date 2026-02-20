@@ -1,6 +1,7 @@
 /target
 /playground
 /venv
+/.venv
 /settings.json
 *.so
 __pycache__
