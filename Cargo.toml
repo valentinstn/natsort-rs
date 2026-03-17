@@ -15,7 +15,7 @@ natord = "1.0.9"
 
 [dependencies.pyo3]
 version = "0.28.2"
-features = ["abi3-py39", "generate-import-lib"]
+features = ["abi3-py311", "generate-import-lib"]
 
 [features]
 extension-module = ["pyo3/extension-module"]

@@ -87,6 +87,12 @@ uv run benchmark.py
 
 This will compare the performance of `natsort-rs` against the pure Python `natsort` library and display results in a table format.
 
+### Run tests
+
+```bash
+uv run -m unittest discover tests
+```
+
 ## Credits
 
 This Python module is build on top of the [`natord`](https://docs.rs/natord/latest/natord/) crate and inspired by [`natsort`](https://pypi.org/project/natsort/).
