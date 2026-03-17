@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.19
+
+- Add support for tuple ordering
+- Minimal Python version bumped to 3.11
+
 ## 0.1.18
 
 - Add Python 3.15 support via pyo3 abi3 stable ABI (PEP 384)

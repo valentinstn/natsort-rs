@@ -132,7 +132,7 @@ jobs:
           merge-multiple: true
           path: dist
       - name: Install wheel
-        run: pip install dist/natsort_rs-*-cp39-abi3-*linux*x86_64.whl
+        run: pip install dist/natsort_rs-*-cp311-abi3-*linux*x86_64.whl
       - name: Remove source to avoid import conflicts
         run: rm -rf natsort_rs
       - name: Run tests
