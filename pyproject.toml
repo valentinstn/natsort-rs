@@ -27,8 +27,8 @@ Changelog = "https://github.com/valentinstn/natsort-rs/blob/main/CHANGELOG.md"
 
 [dependency-groups]
 dev = [
-  "maturin>=1.0,<2.0", 
-  "natsort>=8.0.0", 
-  "tomark>=0.1.0"
+  "maturin>=1.0,<2.0",
+  "natsort>=8.0.0",
+  "tomark>=0.1.0",
 ]
 

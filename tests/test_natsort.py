@@ -101,3 +101,24 @@ class NatSortTestCase(TestCase):
             ),
             [("a", "item 3"), ("a", "item 10"), ("B", "item 2")],
         )
+
+    def test_mixed_str_first_tuple_later(self):
+        """Strings and tuples in the same list sort by their natural string key."""
+        self.assertListEqual(
+            natsort(["item 10", ("item 2", "b"), "item 1"]),
+            ["item 1", ("item 2", "b"), "item 10"],
+        )
+
+    def test_mixed_tuple_first_str_later(self):
+        """Tuple-first mixed list: tuples and bare strings sort together naturally."""
+        self.assertListEqual(
+            natsort([("item 10", "a"), "item 2", ("item 1", "c")]),
+            [("item 1", "c"), "item 2", ("item 10", "a")],
+        )
+
+    def test_mixed_ignore_case(self):
+        """ignore_case is applied correctly across a mixed str/tuple list."""
+        self.assertListEqual(
+            natsort(["Item 10", ("item 2", "b"), "item 1"], ignore_case=True),
+            ["item 1", ("item 2", "b"), "Item 10"],
+        )
