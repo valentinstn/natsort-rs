@@ -6,13 +6,14 @@ def natsort(
     key=None,
     ignore_case: bool = False,
     return_indices: bool = False,
+    none_last: bool = True,
 ):
     if key is None:
         strs_for_sorting = vals
     else:
         strs_for_sorting = [key(item) for item in vals]
 
-    sorted_indices = get_sorted_indices(strs_for_sorting, ignore_case)
+    sorted_indices = get_sorted_indices(strs_for_sorting, ignore_case, none_last)
 
     if return_indices:
         return sorted_indices

@@ -122,3 +122,134 @@ class NatSortTestCase(TestCase):
             natsort(["Item 10", ("item 2", "b"), "item 1"], ignore_case=True),
             ["item 1", ("item 2", "b"), "Item 10"],
         )
+
+    # ------------------------------------------------------------------
+    # None handling
+    # ------------------------------------------------------------------
+
+    def test_none_last_by_default(self):
+        """None values are placed after all non-None values by default."""
+        self.assertListEqual(
+            natsort(["item 3", None, "item 1", "item 2"]),
+            ["item 1", "item 2", "item 3", None],
+        )
+
+    def test_none_first(self):
+        """none_last=False places None values before all non-None values."""
+        self.assertListEqual(
+            natsort(["item 3", None, "item 1", "item 2"], none_last=False),
+            [None, "item 1", "item 2", "item 3"],
+        )
+
+    def test_multiple_nones_last(self):
+        """Multiple None values are all placed at the end, preserving stable order."""
+        result = natsort(["item 2", None, "item 1", None])
+        self.assertListEqual(result[:2], ["item 1", "item 2"])
+        self.assertEqual(result[2], None)
+        self.assertEqual(result[3], None)
+
+    def test_multiple_nones_first(self):
+        """Multiple None values are all placed at the start with none_last=False."""
+        result = natsort(["item 2", None, "item 1", None], none_last=False)
+        self.assertEqual(result[0], None)
+        self.assertEqual(result[1], None)
+        self.assertListEqual(result[2:], ["item 1", "item 2"])
+
+    def test_all_nones(self):
+        """A list of only None values is returned unchanged."""
+        self.assertListEqual(natsort([None, None, None]), [None, None, None])
+
+    def test_none_with_return_indices(self):
+        """return_indices=True works correctly when None values are present."""
+        # "item 1"->idx 2, "item 2"->idx 0, None->idx 1 (last)
+        self.assertEqual(
+            natsort(["item 2", None, "item 1"], return_indices=True),
+            [2, 0, 1],
+        )
+
+    def test_none_with_ignore_case(self):
+        """None values sort correctly alongside ignore_case=True."""
+        self.assertListEqual(
+            natsort(["Item 3", None, "item 1", "ITEM 2"], ignore_case=True),
+            ["item 1", "ITEM 2", "Item 3", None],
+        )
+
+    def test_none_with_key(self):
+        """key function may return None; those entries are sorted last."""
+        data = [
+            {"name": "item 3", "id": 3},
+            {"name": None, "id": 99},
+            {"name": "item 1", "id": 1},
+        ]
+        result = natsort(data, key=lambda d: d["name"])
+        self.assertDictEqual(result[0], {"name": "item 1", "id": 1})
+        self.assertDictEqual(result[1], {"name": "item 3", "id": 3})
+        self.assertDictEqual(result[2], {"name": None, "id": 99})
+
+    def test_none_with_tuple_rows(self):
+        """None values sort last when mixed with tuple rows."""
+        self.assertListEqual(
+            natsort([("item 2", "b"), None, ("item 1", "a")]),
+            [("item 1", "a"), ("item 2", "b"), None],
+        )
+
+    def test_none_first_with_tuple_rows(self):
+        """none_last=False places None before tuple rows."""
+        self.assertListEqual(
+            natsort([("item 2", "b"), None, ("item 1", "a")], none_last=False),
+            [None, ("item 1", "a"), ("item 2", "b")],
+        )
+
+    # ------------------------------------------------------------------
+    # None inside tuples/lists
+    # ------------------------------------------------------------------
+
+    def test_none_inside_tuple_secondary_key(self):
+        """None as a secondary key in a tuple sorts last by default."""
+        self.assertListEqual(
+            natsort(
+                [("section 1", "part 2"), ("section 1", None), ("section 1", "part 1")]
+            ),
+            [("section 1", "part 1"), ("section 1", "part 2"), ("section 1", None)],
+        )
+
+    def test_none_inside_tuple_secondary_key_first(self):
+        """None as a secondary key sorts first with none_last=False."""
+        self.assertListEqual(
+            natsort(
+                [("section 1", "part 2"), ("section 1", None), ("section 1", "part 1")],
+                none_last=False,
+            ),
+            [("section 1", None), ("section 1", "part 1"), ("section 1", "part 2")],
+        )
+
+    def test_none_inside_tuple_primary_key(self):
+        """None as a primary key in a tuple sorts last by default."""
+        self.assertListEqual(
+            natsort([(None, "b"), ("item 2", "a"), ("item 1", "c")]),
+            [("item 1", "c"), ("item 2", "a"), (None, "b")],
+        )
+
+    def test_none_inside_tuple_primary_key_first(self):
+        """None as a primary key sorts first with none_last=False."""
+        self.assertListEqual(
+            natsort([(None, "b"), ("item 2", "a"), ("item 1", "c")], none_last=False),
+            [(None, "b"), ("item 1", "c"), ("item 2", "a")],
+        )
+
+    def test_none_inside_tuple_mixed_with_toplevel_none(self):
+        """None elements inside tuples and top-level None both respect none_last."""
+        self.assertListEqual(
+            natsort([("section 1", None), None, ("section 1", "part 1")]),
+            [("section 1", "part 1"), ("section 1", None), None],
+        )
+
+    def test_none_inside_tuple_ignore_case(self):
+        """ignore_case still works when tuple elements contain None."""
+        self.assertListEqual(
+            natsort(
+                [("B", "item 2"), ("a", None), ("a", "item 1")],
+                ignore_case=True,
+            ),
+            [("a", "item 1"), ("a", None), ("B", "item 2")],
+        )

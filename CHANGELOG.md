@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.20
+
+- Add support for `None` values: they sort last by default; pass `none_last=False` to sort them first instead
+- New `none_last` parameter on `natsort()` and `get_sorted_indices()`
+
 ## 0.1.19
 
 - Add support for tuple ordering
