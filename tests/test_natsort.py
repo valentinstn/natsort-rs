@@ -253,3 +253,22 @@ class NatSortTestCase(TestCase):
             ),
             [("a", "item 1"), ("a", None), ("B", "item 2")],
         )
+
+    # ------------------------------------------------------------------
+    # Numeric handling (ints and floats)
+    # ------------------------------------------------------------------
+
+    def test_ints_in_flat_list(self):
+        """Integers in a flat list are converted to strings for comparison."""
+        self.assertListEqual(natsort([10, 2, 1]), [1, 2, 10])
+
+    def test_floats_in_flat_list(self):
+        """Floats in a flat list are converted to strings for comparison."""
+        self.assertListEqual(natsort([1.0, 1.02, 1.1]), [1.0, 1.02, 1.1])
+
+    def test_numbers_inside_tuples(self):
+        """Numeric elements inside tuples/lists are handled like strings."""
+        self.assertListEqual(
+            natsort([("item", 10), ("item", 2), ("item", 1)]),
+            [("item", 1), ("item", 2), ("item", 10)],
+        )

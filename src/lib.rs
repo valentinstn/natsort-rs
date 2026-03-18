@@ -1,5 +1,6 @@
 use natord::compare;
 use pyo3::prelude::*;
+use pyo3::exceptions::PyTypeError;
 use pyo3::types::{PyList, PyNone, PyString, PyTuple};
 
 /// Compare two optional strings using natural sort order.
@@ -73,13 +74,35 @@ fn compare_opt_rows(
 
 /// Extract a single element as an optional string.
 /// Returns `Ok(None)` for Python `None`, `Ok(Some(s))` for strings.
+#[derive(Debug)]
+enum ExtractRes {
+    Value(Option<String>),
+    Unsupported,
+}
+
 #[inline]
-fn extract_opt_str(item: &Bound<'_, PyAny>, ignore_case: bool) -> PyResult<Option<String>> {
+fn extract_opt_str(item: &Bound<'_, PyAny>, ignore_case: bool) -> PyResult<ExtractRes> {
     if item.is_none() {
-        return Ok(None);
+        return Ok(ExtractRes::Value(None));
     }
-    let s = item.cast::<PyString>()?.str()?.to_string();
-    Ok(Some(if ignore_case { s.to_lowercase() } else { s }))
+    // Fast case: native Python string
+    if item.is_instance_of::<PyString>() {
+        let s = item.cast::<PyString>()?.str()?.to_string();
+        return Ok(ExtractRes::Value(Some(if ignore_case { s.to_lowercase() } else { s })));
+    }
+    // Try extracting as integer without producing Python exceptions to the caller
+    if let Ok(i) = item.extract::<i64>() {
+        let s = i.to_string();
+        return Ok(ExtractRes::Value(Some(if ignore_case { s.to_lowercase() } else { s })));
+    }
+    // Try extracting as float
+    if let Ok(f) = item.extract::<f64>() {
+        let s = f.to_string();
+        return Ok(ExtractRes::Value(Some(if ignore_case { s.to_lowercase() } else { s })));
+    }
+    // Signal that this element's type is unsupported; caller will decide whether to
+    // turn this into a Python exception (only once, avoiding per-element PyErr allocs).
+    Ok(ExtractRes::Unsupported)
 }
 
 /// Convert one item (str, tuple, list, or None) into an optional row.
@@ -93,20 +116,35 @@ fn extract_row(
         return Ok(None);
     }
     if let Ok(t) = item.cast::<PyTuple>() {
-        return t
-            .iter()
-            .map(|e| extract_opt_str(&e, ignore_case))
-            .collect::<PyResult<Vec<_>>>()
-            .map(Some);
+        let mut out: Vec<Option<String>> = Vec::with_capacity(t.len());
+        for e in t.iter() {
+            match extract_opt_str(&e, ignore_case)? {
+                ExtractRes::Value(v) => out.push(v),
+                ExtractRes::Unsupported => {
+                    return Err(PyTypeError::new_err("expected string, None, int, or float"))
+                }
+            }
+        }
+        return Ok(Some(out));
     }
     if let Ok(l) = item.cast::<PyList>() {
-        return l
-            .iter()
-            .map(|e| extract_opt_str(&e, ignore_case))
-            .collect::<PyResult<Vec<_>>>()
-            .map(Some);
+        let mut out: Vec<Option<String>> = Vec::with_capacity(l.len());
+        for e in l.iter() {
+            match extract_opt_str(&e, ignore_case)? {
+                ExtractRes::Value(v) => out.push(v),
+                ExtractRes::Unsupported => {
+                    return Err(PyTypeError::new_err("expected string, None, int, or float"))
+                }
+            }
+        }
+        return Ok(Some(out));
     }
-    Ok(Some(vec![extract_opt_str(item, ignore_case)?]))
+    match extract_opt_str(item, ignore_case)? {
+        ExtractRes::Value(v) => Ok(Some(vec![v])),
+        ExtractRes::Unsupported => Err(PyTypeError::new_err(
+            "expected string, None, int, or float",
+        )),
+    }
 }
 
 /// Return the indices that would sort `rows` in natural order.

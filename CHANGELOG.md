@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.21
+
+- Add support for `int` and `float` values.
+- Keep fast bulk-extract path for homogeneous string lists.
+
 ## 0.1.20
 
 - Add support for `None` values: they sort last by default; pass `none_last=False` to sort them first instead

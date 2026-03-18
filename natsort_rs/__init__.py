@@ -13,6 +13,7 @@ def natsort(
     else:
         strs_for_sorting = [key(item) for item in vals]
 
+    # Performance-critical part is implemented in Rust
     sorted_indices = get_sorted_indices(strs_for_sorting, ignore_case, none_last)
 
     if return_indices:
