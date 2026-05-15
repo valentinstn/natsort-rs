@@ -5,7 +5,7 @@ build-backend = "maturin"
 [project]
 name = "natsort-rs"
 description = "A blazing fast natural sorting library for Python"
-requires-python = ">=3.11"
+requires-python = ">=3.12"
 license = { file = "LICENSE" }
 readme = "README.md"
 dynamic = ["version"]
@@ -25,10 +25,12 @@ Homepage = "https://github.com/valentinstn/natsort-rs"
 Repository = "https://github.com/valentinstn/natsort-rs"
 Changelog = "https://github.com/valentinstn/natsort-rs/blob/main/CHANGELOG.md"
 
+[tool.maturin]
+python-source = "python"
+
 [dependency-groups]
 dev = [
   "maturin>=1.0,<2.0",
   "natsort>=8.0.0",
   "tomark>=0.1.0",
 ]
-
