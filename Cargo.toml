@@ -14,7 +14,7 @@ crate-type = ["cdylib"]
 natord = "1.0.9"
 
 [dependencies.pyo3]
-version = "0.28.2"
+version = "0.28.3"
 features = ["abi3-py312", "generate-import-lib"]
 
 [features]
