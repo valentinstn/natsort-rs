@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.22
+
+- Return types infered from input types
+- Migrate to src layout (`python/` subdirectory)
+
 ## 0.1.21
 
 - Add support for `int` and `float` values.

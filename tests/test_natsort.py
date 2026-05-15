@@ -1,5 +1,6 @@
 from natsort_rs import natsort
 from unittest import TestCase
+from typing import assert_type
 
 
 class NatSortTestCase(TestCase):
@@ -272,3 +273,20 @@ class NatSortTestCase(TestCase):
             natsort([("item", 10), ("item", 2), ("item", 1)]),
             [("item", 1), ("item", 2), ("item", 10)],
         )
+
+    # ------------------------------------------------------------------
+    # Type hint tests
+    # ------------------------------------------------------------------
+
+    def test_return_type_is_list_of_input_type(self):
+        """Without return_indices, the return type matches the input list element type."""
+        str_result = natsort(["b", "a", "c"])
+        assert_type(str_result, list[str])
+
+        int_result = natsort([3, 1, 2])
+        assert_type(int_result, list[int])
+
+    def test_return_indices_gives_list_of_int(self):
+        """With return_indices=True, the return type is always list[int]."""
+        indices = natsort(["b", "a", "c"], return_indices=True)
+        assert_type(indices, list[int])
