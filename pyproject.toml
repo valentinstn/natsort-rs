@@ -1,5 +1,5 @@
 [build-system]
-requires = ["maturin>=1.0,<2.0"]
+requires = ["maturin>=1.13,<2.0"]
 build-backend = "maturin"
 
 [project]
@@ -26,10 +26,11 @@ Changelog = "https://github.com/valentinstn/natsort-rs/blob/main/CHANGELOG.md"
 
 [tool.maturin]
 python-source = "python"
+module-name = "natsort_rs"
 
 [dependency-groups]
 dev = [
-  "maturin>=1.0,<2.0",
+  "maturin>=1.13,<2.0",
   "natsort>=8.0.0",
   "tomark>=0.1.0",
 ]
