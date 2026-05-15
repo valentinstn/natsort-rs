@@ -32,7 +32,7 @@ jobs:
           sccache: 'true'
           manylinux: auto
       - name: Upload wheels
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: wheels-linux-${{ matrix.target }}
           path: dist
@@ -62,7 +62,7 @@ jobs:
           args: --release --out dist --interpreter 3.13t 3.14t
           sccache: 'true'
       - name: Upload wheels
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: wheels-windows-${{ matrix.target }}
           path: dist
@@ -92,30 +92,13 @@ jobs:
           args: --release --out dist --interpreter 3.13t 3.14t 3.15t
           sccache: 'true'
       - name: Upload wheels
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: wheels-macos-${{ matrix.target }}
           path: dist
 
-  sdist:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - uses: actions/checkout@v5
-      - name: Build sdist
-        uses: PyO3/maturin-action@v1
-        with:
-          command: sdist
-          args: --out dist
-      - name: Upload sdist
-        uses: actions/upload-artifact@v4
-        with:
-          name: wheels-sdist
-          path: dist
-
   test:
-    needs: [linux, windows, macos, sdist]
+    needs: [linux, windows, macos]
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -125,7 +108,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Download wheels
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           pattern: wheels-*
           merge-multiple: true
@@ -141,8 +124,14 @@ jobs:
     permissions:
       contents: read
     steps:
+      - uses: actions/checkout@v5
+      - name: Build sdist
+        uses: PyO3/maturin-action@v1
+        with:
+          command: sdist
+          args: --out dist
       - name: Download wheels
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           pattern: wheels-*
           merge-multiple: true
