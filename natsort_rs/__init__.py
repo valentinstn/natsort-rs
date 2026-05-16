@@ -1,32 +1,14 @@
 from .natsort_rs import get_sorted_indices
 
-from typing import Callable, Literal, overload
+from typing import Callable
 
-@overload
-def natsort[T](
-    vals: list[T],
-    key: Callable | None = None,
-    ignore_case: bool = True,
-    return_indices: Literal[False] = False,
-    none_last: bool = True,
-) -> list[T]: ...
-
-@overload
-def natsort[T](
-    vals: list[T],
-    key: Callable | None = None,
-    ignore_case: bool = True,
-    return_indices: Literal[True] = True,
-    none_last: bool = True,
-) -> list[int]: ...
-
-def natsort[T](
-    vals: list[T],
+def natsort(
+    vals: list,
     key: Callable | None = None,
     ignore_case: bool = True,
     return_indices: bool = False,
     none_last: bool = True,
-) -> list[T] | list[int]:
+) -> list:
     if key is None:
         strs_for_sorting = vals
     else:
