@@ -1,10 +1,8 @@
 from .natsort_rs import get_sorted_indices
 
-from typing import Callable
-
 def natsort(
     vals: list,
-    key: Callable | None = None,
+    key = None,
     ignore_case: bool = True,
     return_indices: bool = False,
     none_last: bool = True,
