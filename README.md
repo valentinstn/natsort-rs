@@ -43,20 +43,6 @@ print(natsort(items, key=lambda d: d['name']))
 # [{'name': 'item 1', 'id': 1}, {'name': 'item 2', 'id': 2}, {'name': 'item 3', 'id': 3}]
 ```
 
-### Type-safe sorting
-
-The return type is inferred based on the input list type, so no casting is needed:
-
-```py
-items: list[str] = ['item 1', 'item 10', 'item 3']
-result = natsort(items)
-# result is list[str]
-
-items_int: list[int] = [10, 3, 1]
-result_int = natsort(items_int)
-# result_int is list[int]
-```
-
 ### Return the sorting indices
 
 This can be helpful if you only want to get the sorted indices returned, that makes the performance-critical part

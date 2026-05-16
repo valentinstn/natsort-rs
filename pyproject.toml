@@ -1,11 +1,11 @@
 [build-system]
-requires = ["maturin>=1.13,<2.0"]
+requires = ["maturin>=1.0,<2.0"]
 build-backend = "maturin"
 
 [project]
 name = "natsort-rs"
 description = "A blazing fast natural sorting library for Python"
-requires-python = ">=3.12"
+requires-python = ">=3.11"
 license = { file = "LICENSE" }
 readme = "README.md"
 dynamic = ["version"]
@@ -13,6 +13,7 @@ classifiers = [
     "Programming Language :: Rust",
     "Programming Language :: Python :: Implementation :: CPython",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.14",
@@ -26,7 +27,8 @@ Changelog = "https://github.com/valentinstn/natsort-rs/blob/main/CHANGELOG.md"
 
 [dependency-groups]
 dev = [
-  "maturin>=1.13,<2.0",
+  "maturin>=1.0,<2.0",
   "natsort>=8.0.0",
   "tomark>=0.1.0",
 ]
+

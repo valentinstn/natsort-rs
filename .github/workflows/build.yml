@@ -2,7 +2,8 @@ name: Build and Deploy
 
 on:
   push:
-  pull_request:
+    branches:
+      - main
 
 jobs:
   linux:
@@ -13,26 +14,26 @@ jobs:
       matrix:
         target: [x86_64, aarch64]
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-python@v6
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.11'
       - name: Build wheels
         uses: PyO3/maturin-action@v1
         with:
           target: ${{ matrix.target }}
-          args: --release --out dist --interpreter 3.12 3.13 3.14 3.15
+          args: --release --out dist --interpreter 3.11
           sccache: 'true'
           manylinux: auto
       - name: Build free-threaded wheels
         uses: PyO3/maturin-action@v1
         with:
           target: ${{ matrix.target }}
-          args: --release --out dist --interpreter 3.13t 3.14t 3.15t
+          args: --release --out dist --interpreter 3.13t 3.14t
           sccache: 'true'
           manylinux: auto
       - name: Upload wheels
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v4
         with:
           name: wheels-linux-${{ matrix.target }}
           path: dist
@@ -45,15 +46,15 @@ jobs:
       matrix:
         target: [x64, x86]
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-python@v6
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.11'
       - name: Build wheels
         uses: PyO3/maturin-action@v1
         with:
           target: ${{ matrix.target }}
-          args: --release --out dist --interpreter 3.12 3.13 3.14 3.15
+          args: --release --out dist --interpreter 3.11
           sccache: 'true'
       - name: Build free-threaded wheels
         uses: PyO3/maturin-action@v1
@@ -62,7 +63,7 @@ jobs:
           args: --release --out dist --interpreter 3.13t 3.14t
           sccache: 'true'
       - name: Upload wheels
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v4
         with:
           name: wheels-windows-${{ matrix.target }}
           path: dist
@@ -75,46 +76,63 @@ jobs:
       matrix:
         target: [x86_64, aarch64]
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-python@v6
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.11'
       - name: Build wheels
         uses: PyO3/maturin-action@v1
         with:
           target: ${{ matrix.target }}
-          args: --release --out dist --interpreter 3.12 3.13 3.14 3.15
+          args: --release --out dist --interpreter 3.11
           sccache: 'true'
       - name: Build free-threaded wheels
         uses: PyO3/maturin-action@v1
         with:
           target: ${{ matrix.target }}
-          args: --release --out dist --interpreter 3.13t 3.14t 3.15t
+          args: --release --out dist --interpreter 3.13t 3.14t
           sccache: 'true'
       - name: Upload wheels
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v4
         with:
           name: wheels-macos-${{ matrix.target }}
           path: dist
 
-  test:
-    needs: [linux, windows, macos]
+  sdist:
     runs-on: ubuntu-latest
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-python@v6
+      - uses: actions/checkout@v4
+      - name: Build sdist
+        uses: PyO3/maturin-action@v1
         with:
-          python-version: '3.12'
+          command: sdist
+          args: --out dist
+      - name: Upload sdist
+        uses: actions/upload-artifact@v4
+        with:
+          name: wheels-sdist
+          path: dist
+
+  test:
+    needs: [linux, windows, macos, sdist]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
       - name: Download wheels
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v4
         with:
           pattern: wheels-*
           merge-multiple: true
           path: dist
       - name: Install wheel
-        run: pip install dist/natsort_rs-*-cp312-abi3-*linux*x86_64.whl
+        run: pip install dist/natsort_rs-*-cp311-abi3-*linux*x86_64.whl
       - name: Remove source to avoid import conflicts
         run: rm -rf natsort_rs
       - name: Run tests
@@ -126,14 +144,8 @@ jobs:
 #    permissions:
 #      contents: read
 #    steps:
-#      - uses: actions/checkout@v5
-#      - name: Build sdist
-#        uses: PyO3/maturin-action@v1
-#        with:
-#          command: sdist
-#          args: --out dist
 #      - name: Download wheels
-#        uses: actions/download-artifact@v7
+#        uses: actions/download-artifact@v4
 #        with:
 #          pattern: wheels-*
 #          merge-multiple: true

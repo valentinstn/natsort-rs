@@ -1,12 +1,13 @@
 from .natsort_rs import get_sorted_indices
 
+
 def natsort(
     vals: list,
-    key = None,
-    ignore_case: bool = True,
+    key=None,
+    ignore_case: bool = False,
     return_indices: bool = False,
     none_last: bool = True,
-) -> list:
+):
     if key is None:
         strs_for_sorting = vals
     else:
