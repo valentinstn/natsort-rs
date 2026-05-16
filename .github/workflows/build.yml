@@ -98,25 +98,8 @@ jobs:
           name: wheels-macos-${{ matrix.target }}
           path: dist
 
-  sdist:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - uses: actions/checkout@v5
-      - name: Build sdist
-        uses: PyO3/maturin-action@v1
-        with:
-          command: sdist
-          args: --out dist
-      - name: Upload sdist
-        uses: actions/upload-artifact@v6
-        with:
-          name: wheels-sdist
-          path: dist
-
   test:
-    needs: [linux, windows, macos, sdist]
+    needs: [linux, windows, macos]
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -138,22 +121,22 @@ jobs:
       - name: Run tests
         run: python -m unittest discover tests
 
-#  deploy:
-#    needs: [test]
-#    runs-on: ubuntu-latest
-#    permissions:
-#      contents: read
-#    steps:
-#      - name: Download wheels
-#        uses: actions/download-artifact@v5
-#        with:
-#          pattern: wheels-*
-#          merge-multiple: true
-#          path: dist
-#      - name: Upload to PyPI
-#        uses: PyO3/maturin-action@v1
-#        env:
-#          MATURIN_PYPI_TOKEN: ${{ secrets.PYPI_PASSWORD }}
-#        with:
-#          command: upload
-#          args: --skip-existing dist/*
+  deploy:
+    needs: [test]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Download wheels
+        uses: actions/download-artifact@v5
+        with:
+          pattern: wheels-*
+          merge-multiple: true
+          path: dist
+      - name: Upload to PyPI
+        uses: PyO3/maturin-action@v1
+        env:
+          MATURIN_PYPI_TOKEN: ${{ secrets.PYPI_PASSWORD }}
+        with:
+          command: upload
+          args: --skip-existing dist/*
