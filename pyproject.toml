@@ -2,6 +2,12 @@
 requires = ["maturin>=1.0,<2.0"]
 build-backend = "maturin"
 
+[tool.pyrefly]
+project-includes = [
+    "**/*.py*",
+    "**/*.ipynb",
+]
+
 [project]
 name = "natsort-rs"
 description = "A blazing fast natural sorting library for Python"
@@ -28,6 +34,9 @@ Changelog = "https://github.com/valentinstn/natsort-rs/blob/main/CHANGELOG.md"
 dev = [
   "maturin>=1.0,<2.0",
   "natsort>=8.0.0",
-  "tomark>=0.1.0",
+  "pyrefly>=1.0.0",
+  "ruff>=0.15.13",
 ]
 
+[tool.ruff.format]
+quote-style = "single"
